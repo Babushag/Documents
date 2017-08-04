@@ -1,0 +1,72 @@
+	
+JSON is a text representation of a javascript object. It is effectively an object literal in javascript notation (hence the name - JavaScript Object Notation => JSON).
+
+If you want to "compare" two object, convert the text to objects then compare keys and values.
+
+Some examples of objects to/from text:
+
+// Create obj using an object literal
+var obj = {key: 'value'};
+
+// Convert to text using JSON.stringify
+var text = JSON.stringify(obj);
+
+// Show the value of text
+alert( text ); // {"key":"value"}
+
+// Create a new object from text
+var newObj = JSON.parse(text); // javascript object
+
+// Show the text version of newObj
+alert(JSON.stringify(newObj));  // {"key":"value"}
+
+// Use text as code
+var newObj2 = eval('(' + text + ')');
+
+// It is indeed a string literal
+alert(JSON.stringify(newObj2));  // {"key":"value"}
+
+If you want to compare two objects, convert them from JSON to objects (if they are JSON in the first place) then do something like:
+
+function compareObjects(a, b) {
+  var i, p, aProps = [], bProps = [];
+
+  // Simple test first
+  if (a === b) {
+    return true;
+  }
+
+  // Get properties of a
+  for (p in a) {
+    if (a.hasOwnProperty(p)) {
+      aProps.push(p);
+    } 
+  }
+
+  // Get properties of b
+  for (p in b ) {
+    if (b.hasOwnProperty(p)) {
+      bProps.push(p);
+    } 
+  }
+
+  // If don't have same properties, return false
+  if (aProps.sort().join('') != bProps.sort().join('')) {
+    return false;
+  }
+
+  // If property values aren't the same, return false
+  i = aProps.length;
+  while (i--) {
+    if (a[aProps[i]] !== b[bProps[i]]) {
+      return false;
+    }
+  }
+
+  // If passed all tests, must be equal
+  return true;
+}
+
+
+for object Properties ,you can refer to:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
